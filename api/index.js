@@ -24,6 +24,15 @@ app.get('/monstros', (req, res) => {
     // Retorna a array de monstros como uma resposta JSON
     res.json(monstros);
 });
+// 1. Importar o módulo Express
+// 1. Importar o módulo Expreapp.get('/monstros/random', (req, res) => {
+   if (monstros.length > 0) {
+const index = Math.floor(Math.random() * monstros.length);
+} else {
+res.status(404).json({ erro: 'nenhum monstro encontrado'});
+}
+    res.json(monstros[index]);
+}); 
 
 // --- Iniciar o Servidor ---
 
