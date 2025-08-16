@@ -41,3 +41,33 @@ app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
     console.log(`Acesse: http://localhost:${PORT}/monstros`);
 });
+
+app.get('/monstros', (req, res) => {
+    const tipoCriatura = req.query.tipo_criatura;
+    const pontosVidaMin = req.query.pontos_vida_min;
+    const pontosVidaMax = req.query.pontos_vida_max;
+    const buscaTexto = req.query.q;
+
+    let resultado = monstros;
+
+    if (tipoCriatura) {
+        resultado = resultado.filter(m => m.tipo_criatura === tipoCriatura);
+    }
+    if (pontosVidaMin) {
+        resultado = resultado.filter(m => m.pontos_vida >= Number(pontosVidaMin));
+    }
+    if (pontosVidaMax) {
+        resultado = resultado.filter(m => m.pontos_vida <= Number(pontosVidaMax));
+    }
+    if (buscaTexto) {
+        const texto = buscaTexto.toLowerCase ();
+        resultado = resultado.filter(m =>
+        (m.nome && m.nome.toLowerCase() .includes(texto))  ||
+        (m.descricao && m.descricao.toLowerCase() .includes(texto))
+        );
+
+    }
+
+    res.json(resultado);
+
+});
